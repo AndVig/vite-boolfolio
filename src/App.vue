@@ -1,54 +1,58 @@
 <script>
+import axios from "axios";
+import Project from "./components/ProjectComponent.vue";
 
-import axios from 'axios';
 export default {
-  name:'Projects',
-  data(){
-    return{
-      'title':'Projects',
-      'projects':[],
-    }
+  name: "Projects",
+  components: {
+    Project,
   },
-  methods:{
-    testLifeCycle(){
-      console.log('prova ciclo vita Vue')
+  data() {
+    return {
+      title: "Projects",
+      projects: [],
+    };
+  },
+  methods: {
+    testLifeCycle() {
+      console.log("prova ciclo vita Vue");
     },
-    getProjects(){
-      const result =axios
-      .get('http://127.0.0.1:8000/api/projects')
-      .then((response)=>{console.log(response);
-        console.log('fin qui tutto bene');
-        console.log(response.data.results);
+    getProjects() {
+      const result = axios
+        .get("http://127.0.0.1:8000/api/projects")
+        .then((response) => {
+          console.log(response);
+          console.log("fin qui tutto bene");
+          console.log(response.data.results);
 
-        this.projects=response.data.results
-
-
-      })
-      .catch(error=>console.log(error));
-    }
+          this.projects = response.data.results;
+        })
+        .catch((error) => console.log(error));
+    },
   },
-  created(){
+  created() {
     this.testLifeCycle();
     this.getProjects();
-  }
+  },
 };
 </script>
 
 <template>
-  
-    <header>header</header>
-    <main>
-      <div class="container">
-        <h1>{{title}}</h1>
-
+  <header>header</header>
+  <main>
+    <div class="container">
+      <h1>{{ title }}</h1>
+      <div class="row">
+        <div class="col-3" v-for="project in projects">
+          <Project
+            :title="project.title"
+            
+          />
+        </div>
       </div>
-
-    </main>
-    <footer>footer</footer>
-    
-  
+    </div>
+  </main>
+  <footer>footer</footer>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
